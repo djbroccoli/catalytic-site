@@ -1,0 +1,1 @@
+<?php header("Location: https://catalyticsound.com/index.php"); ?>

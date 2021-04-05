@@ -1,0 +1,106 @@
+<script>
+        $(function() {
+            $(".datepicker").datepicker({
+              format: 'yyyy-mm-dd'
+            });
+            $(".uniform_on").uniform();
+            $(".chzn-select").chosen();
+            $('.textarea').wysihtml5({"image": false});
+
+            $('#provincia').change(function(){
+              $.post('trae-localidades.asp',{prov:$('#provincia').val()}, function(feed){
+                  $('#localidad').empty().append(feed).trigger("liszt:updated");
+                });
+            })
+            $('.ambientes').on('change', function(){
+              if($('#tipopropiedad option:selected').html()=="Departamentos"){
+                $('.ambientes').not(this).prop('checked', false);
+                $('.ambientes').parent('span').removeClass('checked');
+                $(this).parent('span').addClass('checked');
+              }
+            });
+            $('#fileInput').change(function(){
+              imgname = $(this).val();
+              var data = new FormData();
+              $.each($('#fileInput')[0].files, function(i, file) {
+                  data.append('file-'+i, file);
+              });  
+              $.ajax({              
+                type: 'POST',
+                url: 'guardar-imagen-propiedad.asp',
+                data: data,
+                async: false,
+                cache: false,
+                contentType: false,
+                processData: false,
+                success: function(msj){
+                  $('.uploadedfiles').append('<div class="newimage" style="float:left;width:50px;height:50px;border-radius:7px;border:1px solid #ccc;margin-right:10px;background-size:cover;background-position:center center;background-image:url(../'+msj+');"></div>');
+                  $('#fileInput').val('');
+                  $('span.filename').html('No hay archivo seleccionado');
+                },
+                error: function(err){
+                  console.log(err);
+                }
+              });
+            });
+            $(document).on('click', '.newimage', function(){
+              var kill = $(this).css('background-image');
+              var elemkill = $(this);
+              if(confirm('¿Realmente desea eliminar la imagen?')){
+                $.ajax({              
+                  type: 'POST',
+                  url: 'eliminar-imagen-propiedad.asp',
+                  data: {'pathimg':kill},
+                  success: function(msj){
+                    elemkill.remove();
+                  },
+                  error: function(err){
+                    console.log.err;
+                  }
+                });
+              }
+              return false
+            });
+            $('button[type="submit"]').click(function(e){
+              e.preventDefault();
+              var fecha = $('#fecha').val();
+              var hora = $('#hora').val();
+              var tipopropiedad = $('#tipopropiedad option:selected').html();
+              var provincia = $('#provincia option:selected').val();
+              var localidad = $('#localidad option:selected').val();
+              var titulo = $('#titulo').val();
+              var slogan = $('#eslogan').val();
+              var bannerpropiedad = $('#bannerpropiedad').val();
+              var calle = $('#calle').val();
+              var altura = $('#altura').val();
+              var arquitectos = $('#arquitectos').val();
+              var suptot = $('#suptot').val();
+              var cocheras = $('#cocheras option:selected').html();
+              var ambientes = $('#ambientes').html();
+              var amenities = $('#amenities').val();
+              var descripcion = $('#descripcion').val();
+              var preciomin = $('#preciomin').val();
+              var preciomax = $('#preciomax').val();
+              var preciounidad = $('#preciounidad').val();
+              var entrega = $('#etapa').val();
+
+              $.ajax({
+                type: 'POST',
+                url: 'guardar-propiedad.asp',
+                data: {'fecha': fecha, 'hora': hora, 'tipopropiedad': tipopropiedad, 'provincia': provincia, 'localidad': localidad, 'titulo': titulo, 'slogan': slogan, 'bannerpropiedad': bannerpropiedad, 'calle': calle, 'altura': altura, 'arquitectos': arquitectos, 'suptot': suptot, 'cocheras': cocheras, 'ambientes': ambientes, 'amenities': amenities, 'descripcion': descripcion, 'preciomin': preciomin, 'preciomax': preciomax, 'preciounidad': preciounidad, 'entrega': entrega},                
+                success: function(msj){
+                  console.log(msj);
+                  window.location.replace("propiedades.asp#ok");
+                 },
+                error: function(err){
+                  console.log(err);
+                  $('.alert-error').removeClass('hide');
+                }
+              });
+            });
+            $('button[type="cancel"]').click(function(e){
+              e.preventDefault();
+              window.location.replace("propiedades.asp")
+            });
+        });
+        </script>

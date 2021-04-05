@@ -1,0 +1,25 @@
+@import url('https://fonts.googleapis.com/css?family=Chivo:400,400i,700|Lekton|Share+Tech+Mono|Oxygen');
+
+@font-face {
+    font-family: 'synthetique';
+    src: url('../fonts/Synthetique-webfont.eot');
+    src: url('../fonts/Synthetique-webfont.eot?#iefix') format('embedded-opentype'),
+         url('../fonts/Synthetique-webfont.woff2') format('woff2'),
+         url('../fonts/Synthetique-webfont.woff') format('woff'),
+         url('../fonts/Synthetique-webfont.svg#synthetique_otregular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
+@font-face {
+    font-family: 'cubicblock_s';
+    src: url('../fonts/cubicblock_s-webfont.eot');
+    src: url('../fonts/cubicblock_s-webfont.eot?#iefix') format('embedded-opentype'),
+         url('../fonts/cubicblock_s-webfont.woff2') format('woff2'),
+         url('../fonts/cubicblock_s-webfont.woff') format('woff'),
+         url('../fonts/cubicblock_s-webfont.svg#cubicblock_s_otregular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+
+}
