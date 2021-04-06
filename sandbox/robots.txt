@@ -1,6 +1,0 @@
-User-Agent: *
-Disallow: /wpoldsite/
-Disallow: /admin/
-Disallow: /sandbox/
-
-Sitemap: http://catalyticsound.com/sitemap.xml
